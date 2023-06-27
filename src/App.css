@@ -15,5 +15,9 @@ body {
 
 a {
   text-decoration: none;
-  color: #070707;
+  color: #888787;
+}
+
+a.active {
+  color: #111;
 }
