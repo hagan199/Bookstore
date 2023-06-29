@@ -10,8 +10,10 @@ const CategoriesPage = () => {
   const checkStatusHandler = () => {
     dispatch(UPDATE_CATEGORY_STATUS());
   };
-
-  const statusContent = status && status !== '' ? <p>{status}</p> : null;
+  let statusContent;
+  if (status && status !== '') {
+    statusContent = <p>{status}</p>;
+  }
 
   return (
     <Card>

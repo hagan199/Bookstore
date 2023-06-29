@@ -9,8 +9,8 @@
 html,
 body {
   font-family: 'Roboto', sans-serif;
-  color: #070707;
-  background: #eeeef0;
+  color: #eb8c8c;
+  background: white;
 }
 
 a {
@@ -20,4 +20,42 @@ a {
 
 a.active {
   color: #111;
+}
+
+.model-message {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.model-message h3 {
+  padding: 1rem 10px;
+  background: #4b09c6;
+  color: #fff;
+}
+
+.model-message p {
+  padding: 1rem;
+}
+
+.action-success {
+  color: #0aab52;
+}
+
+.action-error {
+  color: red;
+}
+
+.btn-close {
+  align-self: flex-end;
+  width: max-content;
+  padding: 10px 15px;
+  background: #4b09c6;
+  color: #fff;
+  margin: 15px;
+  border: none;
+}
+
+.btn-close:hover {
+  background: rgb(13, 147, 4);
 }

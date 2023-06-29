@@ -1,45 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Card from './UI/Card';
-import { ADD_BOOK } from '../redux/books/books';
+import { postANewBook } from '../redux/books/books';
 
 const NewBook = () => {
-  const [bookData, setBookData] = useState({
-    title: '',
-    isTitleValid: true,
-    author: '',
-    isAuthorValid: true,
-    category: 'Action',
-    isFormValid: false,
-  });
-
-  const {
-    title, isTitleValid, author, isAuthorValid, category, isFormValid,
-  } = bookData;
+  const [title, setTitle] = useState('');
+  const [isTitleValid, setIsTitleValid] = useState(true);
+  const [author, setAuthor] = useState('');
+  const [isAuthorValid, setIsAuthorValid] = useState(true);
   const categoryRef = useRef();
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const dispatch = useDispatch();
+  const titleChangeHandler = (event) => {
+    const bookTitle = event.target.value;
+    setTitle(bookTitle);
+    if (bookTitle.trim().length < 3 || bookTitle.trim().length > 55) {
+      setIsTitleValid(false);
+    } else {
+      setIsTitleValid(true);
+    }
+  };
 
-  useEffect(() => {
-    const isTitleValid = title.trim().length >= 3 && title.trim().length <= 55;
-    const isAuthorValid = author.trim().length >= 3 && author.trim().length <= 25;
-    const isFormValid = isTitleValid && isAuthorValid
-    && title.trim().length !== 0 && author.trim().length !== 0;
-
-    setBookData((prevState) => ({
-      ...prevState,
-      isTitleValid,
-      isAuthorValid,
-      isFormValid,
-    }));
-  }, [title, author]);
-
-  const inputChangeHandler = (event) => {
-    const { name, value } = event.target;
-
-    setBookData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const authorChangeHandler = (event) => {
+    const bookTitle = event.target.value;
+    setAuthor(bookTitle);
+    if (bookTitle.trim().length < 3 || bookTitle.trim().length > 25) {
+      setIsAuthorValid(false);
+    } else {
+      setIsAuthorValid(true);
+    }
   };
 
   const addBookHandler = (event) => {
@@ -47,51 +37,59 @@ const NewBook = () => {
 
     if (isFormValid) {
       dispatch(
-        ADD_BOOK({
+        postANewBook({
           title: title.trim(),
           author: author.trim(),
           category: categoryRef.current.value.trim(),
         }),
       );
 
-      setBookData({
-        title: '',
-        isTitleValid: true,
-        author: '',
-        isAuthorValid: true,
-        category: 'Action',
-        isFormValid: false,
-      });
+      setIsFormValid(false);
+      setTitle('');
+      setAuthor('');
     }
   };
+
+  useEffect(() => {
+    if (
+      isTitleValid
+      && isAuthorValid
+      && title.trim().length !== 0
+      && author.trim().length !== 0
+    ) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [isTitleValid, isAuthorValid, title, author]);
 
   return (
     <Card>
       <h3>Add New Book</h3>
       <form onSubmit={addBookHandler}>
         <div className={!isTitleValid ? 'invalid' : ''}>
-          <p>{!isTitleValid && 'Title should be 3 to 50 characters'}</p>
+          <p>{!isTitleValid && 'Book title should be 3 to 55 character'}</p>
           <input
             id="title"
-            name="title"
             type="text"
             placeholder="Book Title"
             value={title}
-            onChange={inputChangeHandler}
+            onChange={titleChangeHandler}
           />
         </div>
         <div className={!isAuthorValid ? 'invalid' : ''}>
-          <p>{!isAuthorValid && 'Name should be 3 to 20 characters'}</p>
+          <p>
+            {!isAuthorValid && 'Author name should be 3 to 25 character'}
+          </p>
           <input
-            name="author"
             type="text"
             placeholder="Author"
             value={author}
-            onChange={inputChangeHandler}
+            onChange={authorChangeHandler}
           />
         </div>
         <div>
-          <select ref={categoryRef} name="category" value={category} onChange={inputChangeHandler}>
+          <select ref={categoryRef}>
             <option value="Action">Action</option>
             <option value="Science Fiction">Science Fiction</option>
             <option value="Economy">Economy</option>
