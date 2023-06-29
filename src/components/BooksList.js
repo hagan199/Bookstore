@@ -1,54 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const Book = ({
-  id, title, author, category, handleRemove,
-}) => (
-  <li>
-    <div>
-      <span>{title}</span>
-      <span>{author}</span>
-      <span>{category}</span>
-    </div>
-    <button type="button" onClick={() => handleRemove(id)}>Remove</button>
-  </li>
-);
+import Book from './Book';
 
-Book.propTypes = {
-  id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  handleRemove: PropTypes.func.isRequired,
-};
-
-const BooksList = ({ books, handleRemove }) => (
-  <ul>
-    {books.map(({
-      id, title, author, category,
-    }) => (
-      <Book
-        key={id}
-        id={id}
-        title={title}
-        author={author}
-        category={category}
-        handleRemove={handleRemove}
-      />
-    ))}
-  </ul>
-);
-
-BooksList.propTypes = {
-  books: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  handleRemove: PropTypes.func.isRequired,
+const BooksList = () => {
+  const books = useSelector((state) => state.books.books);
+  return (
+    <ul>
+      {books.map((book) => (
+        <Book
+          key={book.id}
+          id={book.id}
+          title={book.title}
+          author={book.author}
+          category={book.category}
+        />
+      ))}
+    </ul>
+  );
 };
 
 export default BooksList;
