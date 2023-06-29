@@ -15,7 +15,7 @@ const App = () => {
   const {
     showModal, loading, isError, message,
   } = useSelector((state) => state.ui);
-  
+
   // Dispatch actions using the useDispatch hook
   const dispatch = useDispatch();
 
@@ -32,7 +32,7 @@ const App = () => {
         <Modal onClick={closeModalHandler}>
           {/* Display loading indicator if loading is true */}
           {loading && <LoadingIndicator />}
-          
+
           {/* Display success or error message */}
           {message !== '' && (
             <div className="model-message">
@@ -51,11 +51,11 @@ const App = () => {
           )}
         </Modal>
       )}
-      
+
       <Routes>
         {/* Route for the BooksPage component */}
         <Route path="/" element={<BooksPage />} />
-        
+
         {/* Route for the CategoriesPage component */}
         <Route path="/categories" element={<CategoriesPage />} />
       </Routes>

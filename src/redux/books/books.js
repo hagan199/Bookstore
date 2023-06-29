@@ -46,7 +46,7 @@ export const fetchBooks = createAsyncThunk(
         uiActions.rejectModal(err.message || 'Failed to fetch books!'),
       );
     }
-    
+
     // Return null if there was an error
     return null;
   },
@@ -73,7 +73,7 @@ export const postANewBook = createAsyncThunk(
         thunkAPI.dispatch(
           uiActions.successModal('Book successfully added!'),
         );
-        
+
         // Return the added book data
         return bookData;
       }
@@ -120,7 +120,7 @@ export const removeBook = createAsyncThunk(
 const initialState = {
   books: [],
 };
-   
+
 // reducer
 const booksReducer = createReducer(initialState, (builder) => {
   builder.addCase(fetchBooks.fulfilled, (state, action) => {
