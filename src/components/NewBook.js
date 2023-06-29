@@ -1,39 +1,108 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Card from './UI/Card';
+import { ADD_BOOK } from '../redux/books/books';
 
-const categories = ['Category', 'Action', 'Romance', 'Economy', 'History', 'Fantasy', 'Science Fiction'];
+const NewBook = () => {
+  const [bookData, setBookData] = useState({
+    title: '',
+    isTitleValid: true,
+    author: '',
+    isAuthorValid: true,
+    category: 'Action',
+    isFormValid: false,
+  });
 
-const NewBook = () => (
-  <Card>
-    <h3>Add New Book</h3>
-    <form>
-      <div>
-        <label htmlFor="title">
-          Book Title:
-          <input type="text" id="title" name="title" placeholder="Book Title" />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="author">
-          Author:
-          <input type="text" id="author" name="author" placeholder="Author" />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="category">
-          Category:
-          <select id="category" name="category">
-            {categories.map((category) => (
-              <option key={category} value={category}>{category}</option>
-            ))}
+  const {
+    title, isTitleValid, author, isAuthorValid, category, isFormValid,
+  } = bookData;
+  const categoryRef = useRef();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const isTitleValid = title.trim().length >= 3 && title.trim().length <= 55;
+    const isAuthorValid = author.trim().length >= 3 && author.trim().length <= 25;
+    const isFormValid = isTitleValid && isAuthorValid
+    && title.trim().length !== 0 && author.trim().length !== 0;
+
+    setBookData((prevState) => ({
+      ...prevState,
+      isTitleValid,
+      isAuthorValid,
+      isFormValid,
+    }));
+  }, [title, author]);
+
+  const inputChangeHandler = (event) => {
+    const { name, value } = event.target;
+
+    setBookData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const addBookHandler = (event) => {
+    event.preventDefault();
+
+    if (isFormValid) {
+      dispatch(
+        ADD_BOOK({
+          title: title.trim(),
+          author: author.trim(),
+          category: categoryRef.current.value.trim(),
+        }),
+      );
+
+      setBookData({
+        title: '',
+        isTitleValid: true,
+        author: '',
+        isAuthorValid: true,
+        category: 'Action',
+        isFormValid: false,
+      });
+    }
+  };
+
+  return (
+    <Card>
+      <h3>Add New Book</h3>
+      <form onSubmit={addBookHandler}>
+        <div className={!isTitleValid ? 'invalid' : ''}>
+          <p>{!isTitleValid && 'Title should be 3 to 50 characters'}</p>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Book Title"
+            value={title}
+            onChange={inputChangeHandler}
+          />
+        </div>
+        <div className={!isAuthorValid ? 'invalid' : ''}>
+          <p>{!isAuthorValid && 'Name should be 3 to 20 characters'}</p>
+          <input
+            name="author"
+            type="text"
+            placeholder="Author"
+            value={author}
+            onChange={inputChangeHandler}
+          />
+        </div>
+        <div>
+          <select ref={categoryRef} name="category" value={category} onChange={inputChangeHandler}>
+            <option value="Action">Action</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option value="Economy">Economy</option>
           </select>
-        </label>
-      </div>
-      <div>
-        <button type="button">Add Book</button>
-      </div>
-    </form>
-  </Card>
-);
+        </div>
+        <div>
+          <button type="submit">Add Book</button>
+        </div>
+      </form>
+    </Card>
+  );
+};
 
 export default NewBook;
