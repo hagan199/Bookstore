@@ -121,7 +121,7 @@ const initialState = {
   books: [],
 };
 
-// reducer
+// Reducer
 const booksReducer = createReducer(initialState, (builder) => {
   builder.addCase(fetchBooks.fulfilled, (state, action) => {
     const updatedState = {
@@ -148,6 +148,8 @@ const booksReducer = createReducer(initialState, (builder) => {
     const updatedState = { ...state, books: [...state.books, { ...book }] };
     return updatedState;
   });
+
+  // Handle other action cases (if any)
   builder.addDefaultCase((state) => state);
 });
 
