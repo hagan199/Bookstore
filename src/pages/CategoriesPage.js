@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { UPDATE_CATEGORY_STATUS } from '../redux/categories/categories';
 import Card from '../components/UI/Card';
+import styles from './CategoriesPage.module.css';
 
 const CategoriesPage = () => {
   const status = useSelector((state) => state.categories.status);
@@ -16,8 +17,8 @@ const CategoriesPage = () => {
   }
 
   return (
-    <Card>
-      <h2>Welcome to the Categories Page</h2>
+    <Card extraclass={styles.Container}>
+      <h1>Welcome to the Categories Page</h1>
       {statusContent}
       <button type="button" onClick={checkStatusHandler}>
         Check status

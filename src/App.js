@@ -11,29 +11,23 @@ import CategoriesPage from './pages/CategoriesPage';
 import './App.css';
 
 const App = () => {
-  // Get relevant state values from the Redux store
   const {
     showModal, loading, isError, message,
-  } = useSelector((state) => state.ui);
-  
-  // Dispatch actions using the useDispatch hook
+  } = useSelector(
+    (state) => state.ui,
+  );
   const dispatch = useDispatch();
 
-  // Handler function to close the modal
   const closeModalHandler = () => {
     if (!loading && showModal) {
       dispatch(uiActions.closeModal());
     }
   };
-
   return (
     <Layout>
       {showModal && (
         <Modal onClick={closeModalHandler}>
-          {/* Display loading indicator if loading is true */}
           {loading && <LoadingIndicator />}
-          
-          {/* Display success or error message */}
           {message !== '' && (
             <div className="model-message">
               <h3>{isError ? 'Error' : 'Success'}</h3>
@@ -51,12 +45,8 @@ const App = () => {
           )}
         </Modal>
       )}
-      
       <Routes>
-        {/* Route for the BooksPage component */}
         <Route path="/" element={<BooksPage />} />
-        
-        {/* Route for the CategoriesPage component */}
         <Route path="/categories" element={<CategoriesPage />} />
       </Routes>
     </Layout>

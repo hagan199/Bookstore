@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Card from './UI/Card';
 import { postANewBook } from '../redux/books/books';
+import styles from './NewBook.module.css';
 
 const NewBook = () => {
   const [title, setTitle] = useState('');
@@ -64,11 +65,14 @@ const NewBook = () => {
   }, [isTitleValid, isAuthorValid, title, author]);
 
   return (
-    <Card>
+    <Card extraclass={styles.formContainer}>
       <h3>Add New Book</h3>
-      <form onSubmit={addBookHandler}>
-        <div className={!isTitleValid ? 'invalid' : ''}>
-          <p>{!isTitleValid && 'Book title should be 3 to 55 character'}</p>
+      <form onSubmit={addBookHandler} className={styles.form}>
+        <div
+          className={`${styles.formControl} ${
+            !isTitleValid ? styles.inputInvalid : ''
+          }`}
+        >
           <input
             id="title"
             type="text"
@@ -76,26 +80,31 @@ const NewBook = () => {
             value={title}
             onChange={titleChangeHandler}
           />
+          <p>{!isTitleValid && 'Book title should be 3 to 55 character'}</p>
         </div>
-        <div className={!isAuthorValid ? 'invalid' : ''}>
-          <p>
-            {!isAuthorValid && 'Author name should be 3 to 25 character'}
-          </p>
+        <div
+          className={`${styles.formControl} ${
+            !isAuthorValid ? styles.inputInvalid : ''
+          }`}
+        >
           <input
             type="text"
             placeholder="Author"
             value={author}
             onChange={authorChangeHandler}
           />
+          <p>
+            {!isAuthorValid && 'Author name should be 3 to 25 character'}
+          </p>
         </div>
-        <div>
+        <div className={styles.formCategory}>
           <select ref={categoryRef}>
             <option value="Action">Action</option>
             <option value="Science Fiction">Science Fiction</option>
             <option value="Economy">Economy</option>
           </select>
         </div>
-        <div>
+        <div className={styles.formAction}>
           <button type="submit">Add Book</button>
         </div>
       </form>
