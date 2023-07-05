@@ -1,0 +1,136 @@
+.book {
+  display: flex;
+  padding: 1.5rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-top: 2rem;
+  margin-bottom: -1rem;
+  color: #0a0a0a;
+  background: #fff;
+  gap: 18px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bookContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #0a0a0a;
+}
+
+.bookContent h4 {
+  padding: 0 8px;
+  font-size: 1rem;
+  opacity: 0.5;
+  font-family: sans-serif;
+}
+
+.bookContent h3 {
+  font-size: 1.375rem;
+  padding: 0 8px;
+  letter-spacing: -0.2px;
+}
+
+.bookContent p {
+  padding: 0 8px;
+  color: #1a95f3;
+  font-size: 0.875rem;
+}
+
+.bookActions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.bookActions button {
+  color: #1a95f3;
+  background: transparent;
+  border: none;
+  padding: 5px 8px;
+  font-size: 0.875rem;
+  font-family: sans-serif;
+  cursor: pointer;
+}
+
+.updateProgress button {
+  padding: 10px 20px;
+  background: #1a95f3;
+  border: none;
+  color: #fcf5f5;
+  font-size: 1rem;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.bookActions button:hover {
+  opacity: 0.5;
+}
+
+.bookProgress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookPercentage {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bookPercentage h2 {
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.bookPercentage h2 span {
+  font-size: 1.5rem;
+  margin-left: 5px;
+  font-weight: normal;
+}
+
+.bookPercentage p {
+  font-size: 1rem;
+  opacity: 0.6;
+  font-weight: normal;
+}
+
+.updateProgress {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: #212121;
+  justify-content: space-between;
+  position: relative;
+  margin-right: 5rem;
+}
+
+.updateProgress::before {
+  left: -25%;
+  position: absolute;
+  content: '';
+  width: 3px;
+  height: 100%;
+  align-self: center;
+  justify-self: center;
+  margin: auto 0;
+  background: #f7f4f4;
+}
+
+.updateProgress p {
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+.bookActions button:nth-child(1),
+.bookActions button:nth-child(2) {
+  border-right: 1px solid #9e9b9b;
+}
